@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Song Crafters - Customized Musical Experiences</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, rgba(44, 62, 80, 0.9), rgba(253, 116, 108, 0.9));
+            color: white;
+            text-align: center;
+            background-image: url('https://picsum.photos/id/1019/1920/1080');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(44, 62, 80, 0.85), rgba(253, 116, 108, 0.85));
+            z-index: -1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: rgba(44, 62, 80, 0.85);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo h1 {
+            margin: 0;
+            font-size: 36px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        nav {
+            margin-left: auto;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        nav a:hover {
+            color: #ff9a8b;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        section {
+            padding: 70px 20px;
+            position: relative;
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+
+        #hero {
+            background-image: url('https://picsum.photos/1600/900?random');
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        h2 {
+            position: relative;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .cta {
+            background: #16A085;
+            padding: 25px 55px;
+            font-size: 24px;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta:hover {
+            transform: scale(1.08) translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .cta:hover::before {
+            transform: rotate(180deg);
+        }
+
+        .steps {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 25px;
+            border-radius: 15px;
+            width: 250px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .testimonial {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 25px;
+            border-radius: 15px;
+            max-width: 500px;
+            margin: 20px auto;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        footer {
+            background: rgba(44, 62, 80, 0.95);
+            padding: 40px 20px;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-media a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s;
+            display: inline-block;
+        }
+
+        .social-media a:hover {
+            color: #ff9a8b;
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="PHOTO-2025-02-19-02-14-15.jpg" alt="Song Crafters Logo">
+            <h1>Song Crafters</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#process">Process</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="hero">
+        <h2>Customized Musical Experiences</h2>
+        <p>Your story deserves a song. Let us craft a melody that speaks to you.</p>
+        <button class="cta" onclick="location.href='#request-song'">Start Your Song</button>
+    </section>
+
+    <section id="about">
+        <h2>Song Crafters: Customized Musical Experiences</h2>
+        <p>At Song Crafters, we believe that music is one of the most powerful forms of expression. It has the ability to capture emotions, tell stories, and celebrate milestones like no other medium can. That’s why we’re dedicated to offering personalized musical experiences tailored to reflect your unique journey, emotions, or special moments.</p>
+        <h3>Personalized with a Touch of Heart</h3>
+        <p>Every song we create is more than just music — it’s a reflection of you. Whether you're commemorating a special occasion, sharing a personal story, or expressing your emotions, we take the time to understand your vision and bring it to life. Our team of seasoned musicians and songwriters works closely with you, ensuring that every note, lyric, and melody is a true representation of your feelings and experiences. Each song is carefully crafted with the utmost attention to detail, resulting in a piece that speaks directly to your heart.</p>
+        <h3>Your Song, Your Story</h3>
+        <p>We’re not just writing music — we’re telling your story through song. Let us help you capture your feelings, tell your story, and create a musical experience that is as personal and meaningful as the moment itself.</p>
+    </section>
+
+    <section id="services">
+        <h2>What We Can Do For You</h2>
+        <p>Our comprehensive services are designed to cater to your every musical need.</p>
+        <div class="steps">
+            <div class="step">
+                <h3>Lyrics Generation</h3>
+                <p>Share your story, and our lyricists will craft words that resonate deeply, capturing the essence of your emotions.</p>
+            </div>
+            <div class="step">
+                <h3>Lyrics Confirmation</h3>
+                <p>We refine your lyrics with your feedback, ensuring every word reflects your vision perfectly.</p>
+            </div>
+            <div class="step">
+                <h3>Song Production</h3>
+                <p>Our team handles composition, arrangement, and production, creating a polished, custom track that brings your lyrics to life.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="process">
+        <h2>Working Process</h2>
+        <p>Here’s how we make your musical experience truly yours:</p>
+        <div class="steps">
+            <div class="step">
+                <h3>Step 1: Share Your Story</h3>
+                <p>Tell us about your emotions, event, or celebration. We’ll work with you to understand your vision.</p>
+            </div>
+            <div class="step">
+                <h3>Step 2: Song Creation</h3>
+                <p>Our team will write, arrange, and compose the perfect piece that reflects your story.</p>
+            </div>
+            <div class="step">
+                <h3>Step 3: Finalize & Produce</h3>
+                <p>Once you approve, we’ll produce the track and deliver the polished final version.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials">
+        <div class="testimonial">
+            <p>"The song Song Crafters created for my anniversary was breathtaking! It perfectly captured our love story, and it will forever be a cherished part of our celebration."</p>
+            <h4>- Priya S.</h4>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-media">
+            <a href="#" target="_blank" class="fab fa-facebook"></a>
+            <a href="#" target="_blank" class="fab fa-twitter"></a>
+            <a href="#" target="_blank" class="fab fa-instagram"></a>
+        </div>
+        <p>&copy; 2025 Song Crafters | 6 Dhanammal Street, Chetpet, Chennai 600031 | +91-8871700717 | office.acustomsong@gmail.com</p>
+    </footer>
+
+</body>
+</html>
