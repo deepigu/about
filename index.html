@@ -2,287 +2,288 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Song Crafters - Customized Musical Experiences</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Song Request Form</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/emailjs-com/3.2.0/email.min.js"></script>
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to right, rgba(44, 62, 80, 0.9), rgba(253, 116, 108, 0.9));
-            color: white;
-            text-align: center;
-            background-image: url('https://picsum.photos/id/1019/1920/1080');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            position: relative;
-            overflow-x: hidden;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to right, rgba(44, 62, 80, 0.85), rgba(253, 116, 108, 0.85));
-            z-index: -1;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #87CEEB, #FD746C);
+            min-height: 100vh;
             padding: 20px;
-            background: rgba(44, 62, 80, 0.85);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .logo {
             display: flex;
-            align-items: center;
-        }
-
-        .logo img {
-            height: 50px;
-            margin-right: 10px;
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .logo h1 {
-            margin: 0;
-            font-size: 36px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        nav {
-            margin-left: auto;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 30px;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: white;
-            transition: color 0.3s, text-shadow 0.3s;
-        }
-
-        nav a:hover {
-            color: #ff9a8b;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-        }
-
-        section {
-            padding: 70px 20px;
-            position: relative;
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-        }
-
-        #hero {
-            background-image: url('https://picsum.photos/1600/900?random');
-            min-height: 80vh;
-            display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative;
         }
 
-        #hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
+        .container {
+            max-width: 600px;
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: -1;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
-            position: relative;
-            font-size: 36px;
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .form-group {
             margin-bottom: 20px;
         }
 
-        .cta {
-            background: #16A085;
-            padding: 25px 55px;
-            font-size: 24px;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
         }
 
-        .cta:hover {
-            transform: scale(1.08) translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        input, 
+        select, 
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
         }
 
-        .cta:hover::before {
-            transform: rotate(180deg);
+        input:focus, 
+        select:focus, 
+        textarea:focus {
+            outline: none;
+            border-color: #87CEEB;
+            box-shadow: 0 0 5px rgba(135, 206, 235, 0.3);
         }
 
-        .steps {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
+        textarea {
+            min-height: 120px;
+            resize: vertical;
         }
 
-        .step {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 25px;
-            border-radius: 15px;
-            width: 250px;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .step:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        }
-
-        .testimonial {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 25px;
-            border-radius: 15px;
-            max-width: 500px;
-            margin: 20px auto;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            position: relative;
-        }
-
-        footer {
-            background: rgba(44, 62, 80, 0.95);
-            padding: 40px 20px;
-            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .social-media a {
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #87CEEB;
             color: white;
-            margin: 0 15px;
-            text-decoration: none;
+            border: none;
+            border-radius: 8px;
             font-size: 18px;
-            transition: color 0.3s;
-            display: inline-block;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
         }
 
-        .social-media a:hover {
-            color: #ff9a8b;
-            transform: scale(1.2);
+        button:hover {
+            background: #6CB4D4;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success-message,
+        .error-message {
+            display: none;
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .success-message {
+            background: #DFF0D8;
+            color: #3C763D;
+            border: 1px solid #D6E9C6;
+        }
+
+        .error-message {
+            background: #F2DEDE;
+            color: #A94442;
+            border: 1px solid #EBCCD1;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #87CEEB;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .price-info {
+            margin-top: 10px;
+            color: #666;
+            font-size: 14px;
+            display: none;
         }
     </style>
 </head>
 <body>
-
-    <header>
-        <div class="logo">
-            <img src="PHOTO-2025-02-19-02-14-15.jpg" alt="Song Crafters Logo">
-            <h1>Song Crafters</h1>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#process">Process</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <section id="hero">
-        <h2>Customized Musical Experiences</h2>
-        <p>Your story deserves a song. Let us craft a melody that speaks to you.</p>
-        <button class="cta" onclick="location.href='#request-song'">Start Your Song</button>
-    </section>
-
-    <section id="about">
-        <h2>Song Crafters: Customized Musical Experiences</h2>
-        <p>At Song Crafters, we believe that music is one of the most powerful forms of expression. It has the ability to capture emotions, tell stories, and celebrate milestones like no other medium can. That’s why we’re dedicated to offering personalized musical experiences tailored to reflect your unique journey, emotions, or special moments.</p>
-        <h3>Personalized with a Touch of Heart</h3>
-        <p>Every song we create is more than just music — it’s a reflection of you. Whether you're commemorating a special occasion, sharing a personal story, or expressing your emotions, we take the time to understand your vision and bring it to life. Our team of seasoned musicians and songwriters works closely with you, ensuring that every note, lyric, and melody is a true representation of your feelings and experiences. Each song is carefully crafted with the utmost attention to detail, resulting in a piece that speaks directly to your heart.</p>
-        <h3>Your Song, Your Story</h3>
-        <p>We’re not just writing music — we’re telling your story through song. Let us help you capture your feelings, tell your story, and create a musical experience that is as personal and meaningful as the moment itself.</p>
-    </section>
-
-    <section id="services">
-        <h2>What We Can Do For You</h2>
-        <p>Our comprehensive services are designed to cater to your every musical need.</p>
-        <div class="steps">
-            <div class="step">
-                <h3>Lyrics Generation</h3>
-                <p>Share your story, and our lyricists will craft words that resonate deeply, capturing the essence of your emotions.</p>
+    <div class="container">
+        <h2>Request Your Custom Song</h2>
+        <form id="songRequestForm">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" required>
             </div>
-            <div class="step">
-                <h3>Lyrics Confirmation</h3>
-                <p>We refine your lyrics with your feedback, ensuring every word reflects your vision perfectly.</p>
-            </div>
-            <div class="step">
-                <h3>Song Production</h3>
-                <p>Our team handles composition, arrangement, and production, creating a polished, custom track that brings your lyrics to life.</p>
-            </div>
-        </div>
-    </section>
 
-    <section id="process">
-        <h2>Working Process</h2>
-        <p>Here’s how we make your musical experience truly yours:</p>
-        <div class="steps">
-            <div class="step">
-                <h3>Step 1: Share Your Story</h3>
-                <p>Tell us about your emotions, event, or celebration. We’ll work with you to understand your vision.</p>
+            <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" required>
             </div>
-            <div class="step">
-                <h3>Step 2: Song Creation</h3>
-                <p>Our team will write, arrange, and compose the perfect piece that reflects your story.</p>
+
+            <div class="form-group">
+                <label for="phone">Your Phone</label>
+                <input type="tel" id="phone" name="phone" required>
             </div>
-            <div class="step">
-                <h3>Step 3: Finalize & Produce</h3>
-                <p>Once you approve, we’ll produce the track and deliver the polished final version.</p>
+
+            <div class="form-group">
+                <label for="package">Select Package</label>
+                <select id="package" name="package" required>
+                    <option value="">Choose a package</option>
+                    <option value="Basic">Basic - ₹950</option>
+                    <option value="Standard">Standard - ₹1500</option>
+                    <option value="Premium">Premium - ₹2000</option>
+                </select>
+                <div id="priceInfo" class="price-info"></div>
             </div>
-        </div>
-    </section>
 
-    <section id="testimonials">
-        <div class="testimonial">
-            <p>"The song Song Crafters created for my anniversary was breathtaking! It perfectly captured our love story, and it will forever be a cherished part of our celebration."</p>
-            <h4>- Priya S.</h4>
-        </div>
-    </section>
+            <div class="form-group">
+                <label for="story">Your Story</label>
+                <textarea id="story" name="story" required></textarea>
+            </div>
 
-    <footer>
-        <div class="social-media">
-            <a href="#" target="_blank" class="fab fa-facebook"></a>
-            <a href="#" target="_blank" class="fab fa-twitter"></a>
-            <a href="#" target="_blank" class="fab fa-instagram"></a>
-        </div>
-        <p>&copy; 2025 Song Crafters | 6 Dhanammal Street, Chetpet, Chennai 600031 | +91-8871700717 | office.acustomsong@gmail.com</p>
-    </footer>
+            <div class="form-group">
+                <label for="preferences">Music Preferences</label>
+                <input type="text" id="preferences" name="preferences" placeholder="Optional: Share your preferred style, mood, or inspirations">
+            </div>
 
+            <button type="submit" id="submitButton">
+                Submit Request
+                <div class="loading-spinner"></div>
+            </button>
+
+            <div class="success-message" id="successMessage">
+                Thank you! Your request has been submitted successfully. We'll contact you soon!
+            </div>
+            <div class="error-message" id="errorMessage">
+                There was an error submitting your request. Please try again.
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Initialize EmailJS with your user ID
+        emailjs.init("YOUR_USER_ID");
+
+        // Package information
+        const packageInfo = {
+            'Basic': {
+                duration: '1-2 mins',
+                lyrics: '2-3 Para Lyrics',
+                revisions: '3 Revisions'
+            },
+            'Standard': {
+                duration: '2-3.5 mins',
+                lyrics: '3-5 Para Lyrics',
+                revisions: '5 Revisions'
+            },
+            'Premium': {
+                duration: '4-5 mins',
+                lyrics: 'Max 8 Para Lyrics',
+                revisions: 'Unlimited Revisions',
+                extras: 'Complimentary video, 2-hour delivery'
+            }
+        };
+
+        // Show package details when package is selected
+        document.getElementById('package').addEventListener('change', function() {
+            const selectedPackage = this.value;
+            const priceInfo = document.getElementById('priceInfo');
+            
+            if (selectedPackage && packageInfo[selectedPackage]) {
+                const info = packageInfo[selectedPackage];
+                priceInfo.innerHTML = `
+                    Duration: ${info.duration}<br>
+                    Lyrics: ${info.lyrics}<br>
+                    Revisions: ${info.revisions}
+                    ${info.extras ? '<br>' + info.extras : ''}
+                `;
+                priceInfo.style.display = 'block';
+            } else {
+                priceInfo.style.display = 'none';
+            }
+        });
+
+        document.getElementById('songRequestForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form elements
+            const submitButton = document.getElementById('submitButton');
+            const spinner = document.querySelector('.loading-spinner');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Disable button and show spinner
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+            spinner.style.display = 'block';
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+
+            // Prepare email data
+            const templateParams = {
+                name: this.name.value,
+                email: this.email.value,
+                phone: this.phone.value,
+                package: this.package.value,
+                story: this.story.value,
+                preferences: this.preferences.value
+            };
+
+            // Send email using EmailJS
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+                .then(function() {
+                    // Show success message
+                    successMessage.style.display = 'block';
+                    // Reset form
+                    document.getElementById('songRequestForm').reset();
+                }, function(error) {
+                    // Show error message
+                    console.error('Error:', error);
+                    errorMessage.style.display = 'block';
+                })
+                .finally(function() {
+                    // Reset button and hide spinner
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Submit Request';
+                    spinner.style.display = 'none';
+                });
+        });
+    </script>
 </body>
 </html>
