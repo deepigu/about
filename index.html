@@ -49,9 +49,7 @@
             font-weight: 500;
         }
 
-        input, 
-        select, 
-        textarea {
+        input, select, textarea {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
@@ -60,9 +58,7 @@
             transition: border-color 0.3s;
         }
 
-        input:focus, 
-        select:focus, 
-        textarea:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #87CEEB;
             box-shadow: 0 0 5px rgba(135, 206, 235, 0.3);
@@ -84,6 +80,10 @@
             font-weight: 600;
             cursor: pointer;
             transition: background 0.3s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
         }
 
         button:hover {
@@ -126,19 +126,13 @@
             border-top: 3px solid #87CEEB;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto;
+            position: absolute;
+            right: 15px;
         }
 
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-
-        .price-info {
-            margin-top: 10px;
-            color: #666;
-            font-size: 14px;
-            display: none;
         }
     </style>
 </head>
@@ -169,7 +163,6 @@
                     <option value="Standard">Standard - ₹1500</option>
                     <option value="Premium">Premium - ₹2000</option>
                 </select>
-                <div id="priceInfo" class="price-info"></div>
             </div>
 
             <div class="form-group">
@@ -197,92 +190,44 @@
     </div>
 
     <script>
-        // Initialize EmailJS with your user ID
-        emailjs.init("8cpXeAmdLWlqO4JxL");
+        document.addEventListener("DOMContentLoaded", function() {
+            emailjs.init("8cpXeAmdLWlqO4JxL");
 
-        // Package information
-        const packageInfo = {
-            'Basic': {
-                duration: '1-2 mins',
-                lyrics: '2-3 Para Lyrics',
-                revisions: '3 Revisions'
-            },
-            'Standard': {
-                duration: '2-3.5 mins',
-                lyrics: '3-5 Para Lyrics',
-                revisions: '5 Revisions'
-            },
-            'Premium': {
-                duration: '4-5 mins',
-                lyrics: 'Max 8 Para Lyrics',
-                revisions: 'Unlimited Revisions',
-                extras: 'Complimentary video, 2-hour delivery'
-            }
-        };
+            document.getElementById('songRequestForm').addEventListener('submit', function(e) {
+                e.preventDefault();
 
-        // Show package details when package is selected
-        document.getElementById('package').addEventListener('change', function() {
-            const selectedPackage = this.value;
-            const priceInfo = document.getElementById('priceInfo');
-            
-            if (selectedPackage && packageInfo[selectedPackage]) {
-                const info = packageInfo[selectedPackage];
-                priceInfo.innerHTML = `
-                    Duration: ${info.duration}<br>
-                    Lyrics: ${info.lyrics}<br>
-                    Revisions: ${info.revisions}
-                    ${info.extras ? '<br>' + info.extras : ''}
-                `;
-                priceInfo.style.display = 'block';
-            } else {
-                priceInfo.style.display = 'none';
-            }
-        });
+                const submitButton = document.getElementById('submitButton');
+                const spinner = document.querySelector('.loading-spinner');
+                const successMessage = document.getElementById('successMessage');
+                const errorMessage = document.getElementById('errorMessage');
 
-        document.getElementById('songRequestForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form elements
-            const submitButton = document.getElementById('submitButton');
-            const spinner = document.querySelector('.loading-spinner');
-            const successMessage = document.getElementById('successMessage');
-            const errorMessage = document.getElementById('errorMessage');
-            
-            // Disable button and show spinner
-            submitButton.disabled = true;
-            submitButton.textContent = 'Sending...';
-            spinner.style.display = 'block';
-            successMessage.style.display = 'none';
-            errorMessage.style.display = 'none';
+                submitButton.disabled = true;
+                submitButton.textContent = 'Sending...';
+                spinner.style.display = 'block';
+                
+                const templateParams = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    package: document.getElementById('package').value,
+                    story: document.getElementById('story').value,
+                    preferences: document.getElementById('preferences').value
+                };
 
-            // Prepare email data
-            const templateParams = {
-                name: this.name.value,
-                email: this.email.value,
-                phone: this.phone.value,
-                package: this.package.value,
-                story: this.story.value,
-                preferences: this.preferences.value
-            };
-
-            // Send email using EmailJS
-            emailjs.send('service_49cltyg', 'template_njgfwo9', templateParams)
-                .then(function() {
-                    // Show success message
-                    successMessage.style.display = 'block';
-                    // Reset form
-                    document.getElementById('songRequestForm').reset();
-                }, function(error) {
-                    // Show error message
-                    console.error('Error:', error);
-                    errorMessage.style.display = 'block';
-                })
-                .finally(function() {
-                    // Reset button and hide spinner
-                    submitButton.disabled = false;
-                    submitButton.textContent = 'Submit Request';
-                    spinner.style.display = 'none';
-                });
+                emailjs.send('service_49cltyg', 'template_njgfwo9', templateParams)
+                    .then(function() {
+                        successMessage.style.display = 'block';
+                        document.getElementById('songRequestForm').reset();
+                    }, function(error) {
+                        console.error('Error:', error);
+                        errorMessage.style.display = 'block';
+                    })
+                    .finally(function() {
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Submit Request';
+                        spinner.style.display = 'none';
+                    });
+            });
         });
     </script>
 </body>
