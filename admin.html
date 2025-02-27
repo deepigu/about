@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melody Master Co - Admin Panel</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, rgba(25, 42, 60, 0.9), rgba(200, 70, 70, 0.9));
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+        
+        .login-form {
+            max-width: 400px;
+            margin: 100px auto;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .request-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .request-table th, .request-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .request-table th {
+            background: rgba(0, 0, 0, 0.3);
+            font-weight: 600;
+        }
+        
+        .request-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .status-new {
+            color: #3498db;
+            font-weight: 600;
+        }
+        
+        .status-completed {
+            color: #2ecc71;
+            font-weight: 600;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .view-btn, .mark-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .view-btn {
+            background: rgba(52, 152, 219, 0.3);
+        }
+        
+        .mark-btn {
+            background: rgba(46, 204, 113, 0.3);
+        }
+        
+        .view-btn:hover {
+            background: rgba(52, 152, 219, 0.5);
+        }
+        
+        .mark-btn:hover {
+            background: rgba(46, 204, 113, 0.5);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            overflow: auto;
+        }
+        
+        .modal-content {
+            background: linear-gradient(to right, rgba(25, 42, 60, 0.95), rgba(200, 70, 70, 0.95));
+            margin: 5% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .close {
+            color: white;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .request-details {
+            margin-top: 20px;
+        }
+        
+        .detail-row {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+        }
+        
+        .detail-label {
+            width: 150px;
+            font-weight: 600;
+            color: #ff9a8b;
+        }
+        
+        .detail-value {
+            flex: 1;
+        }
+        
+        .no-requests {
+            text-align: center;
+            padding: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        input, button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        button {
+            background: #16A085;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #12876f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="login-container">
+        <div class="login-form">
+            <h2>Admin Login</h2>
+            <form id="adminLoginForm">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="container" id="admin-container" style="display: none;">
+        <header>
+            <h1>Melody Master Co - Admin Panel</h1>
+            <button id="logoutBtn" style="width: auto; margin-top: 10px;">Logout</button>
+        </header>
+        
+        <div id="requestsContainer">
+            <!-- Requests will be loaded here -->
+        </div>
+    </div>
+    
+    <!-- Request Details Modal -->
+    <div id="requestModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Request Details</h2>
+            <div id="requestDetails" class="request-details">
+                <!-- Details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Admin credentials (in a real app, this would be handled securely on a server)
+            const adminCredentials = {
+                username: "admin",
+                password: "melody2025"
+            };
+            
+            // Check if user is already logged in
+            const isLoggedIn = sessionStorage.getItem("adminLoggedIn") === "true";
+            if (isLoggedIn) {
+                showAdminPanel();
+            }
+            
+            // Login form handler
+            const loginForm = document.getElementById("adminLoginForm");
+            if (loginForm) {
+                loginForm.addEventListener("submit", function(e) {
+                    e.preventDefault();
+                    
+                    const username = document.getElementById("username").value;
+                    const password = document.getElementById("password").value;
+                    
+                    if (username === adminCredentials.username && password === adminCredentials.password) {
+                        // Set session storage to remember login
+                        sessionStorage.setItem("adminLoggedIn", "true");
+                        showAdminPanel();
+                    } else {
+                        alert("Invalid username or password!");
+                    }
+                });
+            }
+            
+            // Logout button handler
+            const logoutBtn = document.getElementById("logoutBtn");
+            if (logoutBtn) {
+                logoutBtn.addEventListener("click", function() {
+                    sessionStorage.removeItem("adminLoggedIn");
+                    hideAdminPanel();
+                });
+            }
+            
+            // Modal close button
+            const closeBtn = document.querySelector(".close");
+            if (closeBtn) {
+                closeBtn.addEventListener("click", function() {
+                    document.getElementById("requestModal").style.display = "none";
+                });
+            }
+            
+            // Close modal when clicking outside
+            window.addEventListener("click", function(event) {
+                const modal = document.getElementById("requestModal");
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        });
+        
+        // Show admin panel
+        function showAdminPanel() {
+            document.getElementById("login-container").style.display = "none";
+            document.getElementById("admin-container").style.display = "block";
+            loadRequests();
+        }
+        
+        // Hide admin panel
+        function hideAdminPanel() {
+            document.getElementById("login-container").style.display = "block";
+            document.getElementById("admin-container").style.display = "none";
+        }
+        
+        // Load song requests from localStorage
+        function loadRequests() {
+            const requestsContainer = document.getElementById("requestsContainer");
+            const requests = JSON.parse(localStorage.getItem("songRequests") || "[]");
+            
+            if (requests.length === 0) {
+                requestsContainer.innerHTML = `
+                    <div class="no-requests">
+                        <h2>No song requests yet</h2>
+                        <p>When customers submit requests, they will appear here.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Sort requests by timestamp (newest first)
+            requests.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            
+            // Create requests table
+            let html = `
+                <table class="request-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Package</th>
+                            <th>Email/Phone</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            requests.forEach((request, index) => {
+                const date = new Date(request.timestamp).toLocaleDateString();
+                const status = request.status || "New";
+                
+                html += `
+                    <tr>
+                        <td>${date}</td>
+                        <td>${request.name}</td>
+                        <td>${request.package}</td>
+                        <td>${request.email}<br>${request.phone}</td>
+                        <td class="status-${status.toLowerCase()}">${status}</td>
+                        <td class="actions">
+                            <button class="view-btn" onclick="viewRequest(${index})">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                            ${status === "New" ? 
+                                `<button class="mark-btn" onclick="markAsCompleted(${index})">
+                                    <i class="fas fa-check"></i> Mark Complete
+                                </button>` : 
+                                ''
+                            }
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                    </tbody>
+                </table>
+            `;
+            
+            requestsContainer.innerHTML = html;
+        }
+        
+        // View request details
+        function viewRequest(index) {
+            const requests = JSON.parse(localStorage.getItem("songRequests") || "[]");
+            const request = requests[index];
+            
+            if (!request) return;
+            
+            const modal = document.getElementById("requestModal");
+            const detailsContainer = document.getElementById("requestDetails");
+            
+            // Format date
+            const date = new Date(request.timestamp).toLocaleString();
+            
+            // Create details HTML
+            let detailsHtml = `
+                <div class="detail-row">
+                    <div class="detail-label">Date:</div>
+                    <div class="detail-value">${date}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Name:</div>
+                    <div class="detail-value">${request.name}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Email:</div>
+                    <div class="detail-value">${request.email}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Phone:</div>
+                    <div class="detail-value">${request.phone}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Package:</div>
+                    <div class="detail-value">${request.package}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Music Preferences:</div>
+                    <div class="detail-value">${request.preferences || "None specified"}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Story:</div>
+                    <div class="detail-value">${request.story}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Status:</div>
+                    <div class="detail-value">${request.status || "New"}</div>
+                </div>
+            `;
+            
+            detailsContainer.innerHTML = detailsHtml;
+            modal.style.display = "block";
+        }
+        
+        // Mark request as completed
+        function markAsCompleted(index) {
+            const requests = JSON.parse(localStorage.getItem("songRequests") || "[]");
+            
+            if (requests[index]) {
+                if (confirm("Mark this request as completed?")) {
+                    requests[index].status = "Completed";
+                    localStorage.setItem("songRequests", JSON.stringify(requests));
+                    loadRequests(); // Refresh the table
+                }
+            }
+        }
+    </script>
+</body>
+</html>
