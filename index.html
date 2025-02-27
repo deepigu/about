@@ -1111,7 +1111,113 @@ document.addEventListener("DOMContentLoaded", function () {
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
+/* Form response styling */
+.response-message {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    font-weight: 400;
+    text-align: center;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
 
+.response-message:not(:empty) {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.response-message h3 {
+    margin-top: 0;
+    font-weight: 700;
+}
+
+.response-message.success {
+    border-left: 5px solid #16A085;
+}
+
+.response-message.error {
+    border-left: 5px solid #e74c3c;
+}
+
+/* Admin notification styling */
+.admin-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+    max-width: 320px;
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+    backdrop-filter: blur(5px);
+    border-left: 4px solid #16A085;
+}
+
+.admin-notification.show {
+    transform: translateX(0);
+}
+
+.notification-icon {
+    margin-right: 15px;
+    font-size: 24px;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.notification-message {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 0 0 10px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.notification-close:hover {
+    opacity: 1;
+}
+
+/* Add loading animation for submit button */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+#songRequestForm button[type="submit"]:disabled {
+    animation: pulse 1.5s infinite;
+    background: #7f8c8d;
+    transform: none;
+    cursor: wait;
+}
         @media screen and (max-width: 768px) {
             .menu-toggle {
                 display: block;
@@ -1726,6 +1832,177 @@ document.addEventListener("DOMContentLoaded", function () {
         function toggleMenu() {
             document.querySelector('.nav-links').classList.toggle('show');
         }
+
+	    // Form submission handler
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("songRequestForm");
+    
+    if (form) {
+        // Create a response message container if it doesn't exist
+        let responseDiv = document.getElementById("formResponse");
+        if (!responseDiv) {
+            responseDiv = document.createElement("div");
+            responseDiv.id = "formResponse";
+            responseDiv.className = "response-message";
+            form.parentNode.insertBefore(responseDiv, form.nextSibling);
+        }
+        
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            // Show loading state
+            const submitButton = this.querySelector("button[type='submit']");
+            const originalText = submitButton.textContent;
+            submitButton.textContent = "Processing...";
+            submitButton.disabled = true;
+            
+            // Clear previous response
+            responseDiv.textContent = "";
+            responseDiv.className = "response-message";
+            
+            // Get form data
+            const formData = new FormData(this);
+            const formDataObj = {};
+            formData.forEach((value, key) => {
+                formDataObj[key] = value;
+            });
+            
+            // Validate form
+            const errors = validateForm(formDataObj);
+            
+            if (errors.length > 0) {
+                // Show validation errors
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+                
+                responseDiv.textContent = errors.join(". ");
+                responseDiv.className = "response-message error";
+                return;
+            }
+            
+            // Store submission in localStorage (for demo purposes)
+            saveSubmission(formDataObj);
+            
+            // Simulate server processing time
+            setTimeout(() => {
+                // Reset button
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+                
+                // Display success message
+                responseDiv.innerHTML = `
+                    <h3>Thank you for your request, ${formDataObj.name}!</h3>
+                    <p>We've received your song request and are excited to create something special just for you.</p>
+                    <p>You should receive a confirmation email at ${formDataObj.email} shortly.</p>
+                    <p>Our team will be in touch within 24 hours.</p>
+                `;
+                responseDiv.className = "response-message success";
+                
+                // Clear form
+                form.reset();
+                
+                // Display notification (simulating admin notification)
+                showNotification(`New song request from ${formDataObj.name}`);
+                
+                // Scroll to response message
+                responseDiv.scrollIntoView({ behavior: 'smooth' });
+            }, 1500);
+        });
+    }
+});
+
+// Form validation
+function validateForm(data) {
+    const errors = [];
+    
+    if (!data.name || data.name.trim() === "") {
+        errors.push("Please enter your name");
+    }
+    
+    if (!data.email || data.email.trim() === "") {
+        errors.push("Please enter your email");
+    } else if (!isValidEmail(data.email)) {
+        errors.push("Please enter a valid email address");
+    }
+    
+    if (!data.phone || data.phone.trim() === "") {
+        errors.push("Please enter your phone number");
+    }
+    
+    if (!data.story || data.story.trim() === "") {
+        errors.push("Please share your story");
+    }
+    
+    if (!data.package || data.package === "") {
+        errors.push("Please select a package");
+    }
+    
+    return errors;
+}
+
+// Email validation helper
+function isValidEmail(email) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+// Save submission data to localStorage (simulating database storage)
+function saveSubmission(data) {
+    // Get existing submissions or initialize empty array
+    const submissions = JSON.parse(localStorage.getItem('songRequests') || '[]');
+    
+    // Add timestamp
+    data.timestamp = new Date().toISOString();
+    
+    // Add to submissions array
+    submissions.push(data);
+    
+    // Save back to localStorage
+    localStorage.setItem('songRequests', JSON.stringify(submissions));
+}
+
+// Show notification (simulating admin notification)
+function showNotification(message) {
+    // Create notification element
+    const notification = document.createElement("div");
+    notification.className = "admin-notification";
+    notification.innerHTML = `
+        <div class="notification-icon">🔔</div>
+        <div class="notification-content">
+            <div class="notification-title">New Request</div>
+            <div class="notification-message">${message}</div>
+        </div>
+        <button class="notification-close">&times;</button>
+    `;
+    
+    // Add to document
+    document.body.appendChild(notification);
+    
+    // Show notification with animation
+    setTimeout(() => {
+        notification.classList.add("show");
+    }, 100);
+    
+    // Set up close button
+    notification.querySelector(".notification-close").addEventListener("click", function() {
+        notification.classList.remove("show");
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    });
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        if (document.body.contains(notification)) {
+            notification.classList.remove("show");
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    notification.remove();
+                }
+            }, 300);
+        }
+    }, 5000);
+}
         
         // Close menu when a nav item is clicked
         document.querySelectorAll('.nav-links a').forEach(link => {
