@@ -1090,8 +1090,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         .pricing-box {
 		font-family: 'poppins' , sans-serif;
-		font-size:18px;  /* change 18 to 22 */
-		font-weight: 700;
+		font-size:10px;  /* change 18 to 10 */
+		font-weight: 400;
 		color: white;
             background: rgba(0, 0, 0, 0.8); /* Black box with slight transparency */
             padding: 20px;
@@ -1111,113 +1111,7 @@ document.addEventListener("DOMContentLoaded", function () {
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-/* Form response styling */
-.response-message {
-    margin-top: 20px;
-    padding: 20px;
-    border-radius: 10px;
-    font-weight: 400;
-    text-align: center;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(5px);
-}
 
-.response-message:not(:empty) {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.response-message h3 {
-    margin-top: 0;
-    font-weight: 700;
-}
-
-.response-message.success {
-    border-left: 5px solid #16A085;
-}
-
-.response-message.error {
-    border-left: 5px solid #e74c3c;
-}
-
-/* Admin notification styling */
-.admin-notification {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    z-index: 1001;
-    max-width: 320px;
-    transform: translateX(120%);
-    transition: transform 0.3s ease;
-    backdrop-filter: blur(5px);
-    border-left: 4px solid #16A085;
-}
-
-.admin-notification.show {
-    transform: translateX(0);
-}
-
-.notification-icon {
-    margin-right: 15px;
-    font-size: 24px;
-}
-
-.notification-content {
-    flex: 1;
-}
-
-.notification-title {
-    font-weight: 600;
-    margin-bottom: 5px;
-    font-size: 16px;
-}
-
-.notification-message {
-    font-size: 14px;
-    opacity: 0.9;
-}
-
-.notification-close {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-    padding: 0 0 0 10px;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-}
-
-.notification-close:hover {
-    opacity: 1;
-}
-
-/* Add loading animation for submit button */
-@keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.7; }
-    100% { opacity: 1; }
-}
-
-#songRequestForm button[type="submit"]:disabled {
-    animation: pulse 1.5s infinite;
-    background: #7f8c8d;
-    transform: none;
-    cursor: wait;
-}
         @media screen and (max-width: 768px) {
             .menu-toggle {
                 display: block;
@@ -1267,9 +1161,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             
             .pricing-box p {
-                font-size: 22px;  /* change 12 to 22 */
+                font-size: 24px;  /* change 12 to 22 */
                 margin: 5px 0;
-                line-height: 1.2;
+                line-height: 1.6;
+				font-style:bold;
             }
             
             .pricing-box button {
@@ -1376,7 +1271,113 @@ document.addEventListener("DOMContentLoaded", function () {
             opacity: 0.1;
             transform: rotate(-15deg);
         }
-        
+        /* Form response styling */
+.response-message {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    font-weight: 400;
+    text-align: center;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.response-message:not(:empty) {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.response-message h3 {
+    margin-top: 0;
+    font-weight: 700;
+}
+
+.response-message.success {
+    border-left: 5px solid #16A085;
+}
+
+.response-message.error {
+    border-left: 5px solid #e74c3c;
+}
+
+/* Admin notification styling */
+.admin-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+    max-width: 320px;
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+    backdrop-filter: blur(5px);
+    border-left: 4px solid #16A085;
+}
+
+.admin-notification.show {
+    transform: translateX(0);
+}
+
+.notification-icon {
+    margin-right: 15px;
+    font-size: 24px;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.notification-message {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 0 0 10px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.notification-close:hover {
+    opacity: 1;
+}
+
+/* Add loading animation for submit button */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+#songRequestForm button[type="submit"]:disabled {
+    animation: pulse 1.5s infinite;
+    background: #7f8c8d;
+    transform: none;
+    cursor: wait;
+}
         @media screen and (max-width: 480px) {
             .logo h1 {
                 font-size: 24px;
@@ -1401,8 +1402,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             
             .pricing-box p {
-                font-size: 22px;  /* change 11 to 22 */
+                font-size: 24px;  /* change 11 to 22 */
                 margin: 3px 0;
+				font-weight: bold;
             }
             
             .pricing-box button {
@@ -1645,6 +1647,10 @@ document.addEventListener("DOMContentLoaded", function () {
     </style>
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MBD8KDQJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <header>
         <div class="logo">
             <img src="PHOTO-2025-02-19-02-14-15.jpg" alt="Melody Master Co Logo">
@@ -1731,7 +1737,7 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
     </section>
     
-   <section id="pricing">
+    <section id="pricing">
         <h2>Our Pricing Packages</h2>
         <p>Choose the plan that fits your needs:</p>
         <div class="pricing">
@@ -1754,7 +1760,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <button onclick="location.href='#request-song'">Start Now</button>
             </div>
             <div class="pricing-box">
-                <h3>  Premium </h3>
+                <h3> <u> Premium </u></h3>
 				<p style="font-size:30px;"><b>  ₹2000 Per Song </b>  </p>
                <p text-decoration: underline>
                 <p style="font-size:15px;">Song Duration: 4-5 mins</p>
@@ -1777,6 +1783,7 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
         </div>
     </section>
+    
     <section id="request-song">
         <h2>Request Your Custom Song</h2>
         <form id="songRequestForm">
@@ -1832,8 +1839,14 @@ document.addEventListener("DOMContentLoaded", function () {
         function toggleMenu() {
             document.querySelector('.nav-links').classList.toggle('show');
         }
-
-	    // Form submission handler
+        
+        // Close menu when a nav item is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function () {
+                document.querySelector('.nav-links').classList.remove('show');
+            });
+        });
+        // Form submission handler
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById("songRequestForm");
     
@@ -2003,14 +2016,6 @@ function showNotification(message) {
         }
     }, 5000);
 }
-        
-        // Close menu when a nav item is clicked
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', function () {
-                document.querySelector('.nav-links').classList.remove('show');
-            });
-        });
-        
         // Your heart animation script
         document.addEventListener("DOMContentLoaded", function () {
             setInterval(createFallingHeart, 300);
